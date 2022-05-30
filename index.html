@@ -17,8 +17,12 @@
     <nav class="navbar navbar-expand-lg navbar-fixed-top navbar-light bg-light">
       <a href="" class="navbar-brand">Addressbook</a>
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item"><a href="contacts-view" class="nav-link">Contacts</a></li>
-        <li class="nav-item"><a href="add-contact-view" class="nav-link">Add contacts</a></li>
+        <li class="nav-item">
+          <a href="contacts-view" class="nav-link">Contacts</a>
+        </li>
+        <li class="nav-item">
+          <a href="add-contact-view" class="nav-link">Add contacts</a>
+        </li>
       </ul>
     </nav>
     <div class="container-fluid">
@@ -36,6 +40,8 @@
                     <th>Last Name</th>
                     <th>Phoe Number</th>
                     <th>Email</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody id="contacts-table-body"></tbody>
@@ -72,11 +78,29 @@
                 class="form-control"
                 placeholder="email"
               /><br />
-              <button id= 'save'class="form-control btn btn-info">Save</button>
+              <button id="save" class="form-control btn btn-info">Save</button>
             </div>
           </div>
         </div>
       </div>
+      <!-- Add contact view end -->
+      <!-- Edit account view  -->
+      <div class="row view" id="edit-contact-view">
+        <div class="col-10 offset-1">
+          <h2 class="display-4 m-4">Edit contacts</h2>
+          <div class="row">
+            <div class="col-8 offset-2">
+              <input type="text" class="form-control eId" /><br />
+              <input type="text" class="form-control eName" /><br />
+              <input type="text" class="form-control eLast" /><br />
+              <input type="text" class="form-control ePhone" /><br />
+              <input type="text" class="form-control eMail" /><br />
+              <button id="edit" class="form-control btn btn-info">Edit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Edit account view end  -->
     </div>
     <script src="db.js"></script>
     <script src="main.js"></script>
