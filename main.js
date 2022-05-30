@@ -1,59 +1,41 @@
+window.addEventListener('beforeunload',saveAll);
+
 let contactsTableBody = document.querySelector('#contacts-table-body');
-let allLinks = document.querySelector('.nav-link');
+let allLinks = document.querySelectorAll('.nav-link');
 let contactsView = document.querySelector('#contacts-view');
 let addContactView = document.querySelector('#add-contact-view');
-let views = document.querySelectorAll('.view')
-let editContactsView = document.querySelector('#edit-contacts-view');
+let views = document.querySelectorAll('.view');
 let idInput = document.querySelector('[placeholder="id"]')
 let nameInput = document.querySelector('[placeholder="name"]')
 let lastNameInput = document.querySelector('[placeholder="lastname"]')
 let phoneInput = document.querySelector('[placeholder="phone"]')
 let emailInput = document.querySelector('[placeholder="email"]')
 let saveBtn = document.querySelector('#save')
-let eId = document.querySelector('.eId')
-let eName = document.querySelector('.eName')
-let eLast = document.querySelector('.eLast')
-let ePhone = document.querySelector('.ePhone')
-let eMail = document.querySelector('.eMail')
-let editContactsBtn = document.querySelector('#edit-cont')
-let editBtn = document.querySelector('#edit')
-let id 
+let eId = document.querySelector('.eId');
+let eName = document.querySelector('.eName');
+let eLast = document.querySelector('.eLast');
+let eMail = document.querySelector('.eMail');
+let ePhone = document.querySelector('.ePhone');
+let editBtn = document.querySelector('#edit');
+let id;
 
-editBtn.addEventListener('click', saveEditedContact);
+edit.addEventListener('click', saveEditedContact)
 saveBtn.addEventListener('click', saveContact)
 
-for (let i = 0; i < allLinks.length; i++) {
-    allLinks[i].addEventListener('click', showView)
-}
-
-function showView(e) {
-    for (let i = 0; i < views.length; i++) {
-        views[i].style.display = 'none';
-    }
-    if (e instanceof Event) {
-        e.preventDefault();
-        let id = `ID${this.getAttribute('href')}`;
-        document.querySelector(id).style.display = 'block';
-    } else {
-        document.querySelector(e).style.display = 'block'
-    }
-
-    let id = `ID${this.getAttribute('href')}`;
-    document.querySelector(id).style.display = 'block';
-}
-
-function saveEditedContact() {
+function saveEditedContact(){
     const editedContact = {
-        id: eId.value,
+        id : eId.value,
         name: eName.value,
-        lastname: eLast.value,
-        phone: ePhone.value,
-        email: eMail.value
+        lastname : eLast.value,
+        email: eMail.value,
+        phone: ePhone.value
     }
-    db[id]= editedContact;
+
+    db[id]=editedContact;
     createContactsTable();
-    showView('#contacts-view',)
+    // showView("contacts-view");       // TODO fix this
 }
+
 
 function saveContact() {
     const newContact = {
@@ -70,36 +52,51 @@ function saveContact() {
     phoneInput.value = '';
     emailInput.value = '';
     createContactsTable();
-    showView('#contacts-view');
+    // showView("contacts-view");  // TODO fix this
 }
 
+for (let i = 0; i <allLinks.length; i++){
+    allLinks[i].addEventListener('click',showView);
+}
 
+function showView(e){
+    for (let i = 0; i < views.length; i++) {
+        views[i].style.display = 'none';        
+    }
+
+    if(e instanceof Event){
+        e.preventDefault();
+        let id = `#${this.getAttribute('href')}`;
+        document.querySelector(id).style.display = 'block';
+    }else{
+        document.querySelector(e).style.display = 'block';
+    }
+}
 
 createContactsTable();
 
 function createContactsTable() {
-    let htmlcontacts = ``;
+    let htmlContacts = ``;
     for (let i = 0; i < db.length; i++) {
         const contact = db[i];
-        htmlcontacts += `
+        htmlContacts += `
         <tr>
             <td>${contact.id}</td>
             <td>${contact.name}</td>
             <td>${contact.lastname}</td>
             <td>${contact.phone}</td>
             <td>${contact.email}</td>
-            <td><button data-id='${i}' class="edit-btn btn btn-sm btn-warning form-control">Edit</button></td>
-            <td><button data-id='${i}' class="delete-btn btn btn-sm btn-danger form-control">Delete</button></td>
+            <td><button data-id='${i}' class='edit-btn btn btn-sm btn-warning form-control'>Edit</button></td>
+            <td><button data-id='${i}' class='delete-btn btn btn-sm btn-danger form-control'>Delete</button></td>
         </tr>
          `
     }
-    contactsTableBody.innerHTML = htmlcontacts;
-    let allDeleteBtns = document.querySelectorAll('.delete-btn')
-    let allEditBtns = document.querySelectorAll('.edit-btn')
-
+    contactsTableBody.innerHTML = htmlContacts;
+    let allDeleteBtns = document.querySelectorAll('.delete-btn');
+    let allEditBtns = document.querySelectorAll('.edit-btn');
     for (let i = 0; i < allDeleteBtns.length; i++) {
-        allDeleteBtns[i].addEventListener('click', deleteContact);
-        allEditBtns[i].addEventListener('click', editContact);
+        allDeleteBtns[i].addEventListener('click',deleteContact);
+        allEditBtns[i].addEventListener('click',editContact);
 
     }
 }
@@ -119,4 +116,8 @@ function editContact() {
     ePhone.value = selectedContact.phone;
     eMail.value = selectedContact.email;
     showView('#edit-contact-view')
+}
+
+function saveAll(){
+    localStorage.db = JSON.stringify(db);
 }
